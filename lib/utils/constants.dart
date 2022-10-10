@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static Color primaryColor = Colors.blue;
+  static int primaryColorCode = (0xff0000ff);
+  static Color primaryColor = Color(primaryColorCode);
   static String appName = '';
 }
 
 class AppConstants {
   static String graphqlEndpoint = '';
+  static String apiEndpoint = '';
 }
 
 Map<int, Color> appPrimaryColor = {

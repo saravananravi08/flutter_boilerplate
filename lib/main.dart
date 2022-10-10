@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
         title: AppTheme.appName,
         theme: ThemeData(
             brightness: Brightness.dark,
-            primarySwatch: MaterialColor((0xff0000ff), appPrimaryColor)),
+            primarySwatch:
+                MaterialColor(AppTheme.primaryColorCode, appPrimaryColor)),
         initialBinding: InitialBindings(),
         initialRoute: GlobalService.to.initialRoute(),
       ),
