@@ -74,6 +74,11 @@ Widget alignRight(giveChild) => Align(
       child: giveChild,
     );
 
+Widget alignleft(giveChild) => Align(
+      alignment: Alignment.centerRight,
+      child: giveChild,
+    );
+
 // formfield widgets
 Widget textField({
   required TextEditingController fieldController,
@@ -201,21 +206,57 @@ Widget horizontalDividerWidget(Color giveColor) => SizedBox(
       ),
     );
 
-//container widget
-Widget roundedCornerContainer(
+//rounded edged container widgets
+/// function which returns desired radius to the containers borderadius
+/// when the provided [side] is true
+/// else will return '0' as a double value
+double cornerRadius(bool side, double radius) {
+  if (side == true) {
+    return radius;
+  } else {
+    return 0;
+  }
+}
+
+/// widget method of a rounded edged container
+/// this method can be used to created rounded edged container on all the sides
+/// or any one of the side
+/// it can be done by changind [top] and [bottom] as true/false
+/// the default boolean value is true for both the sides
+/// and the default border color is transparent and it can be changed by providing
+/// desired value to [giveBorderColor]
+Widget customContainer(
     {Color giveColor = Colors.transparent,
     Color giveBorderColor = Colors.transparent,
+    double giveBorderWidth = 0,
     required double? giveHeight,
     required double? giveWidth,
-    double circularCorner = 12,
+    double topLeft = 12,
+    double topRight = 12,
+    double bottomRight = 12,
+    double bottomLeft = 12,
+    bool top = true,
+    bool bottom = true,
     required Widget containerChild}) {
   return Container(
     height: giveHeight,
     width: giveWidth,
     decoration: BoxDecoration(
         color: giveColor,
-        borderRadius: BorderRadius.circular(circularCorner),
-        border: Border.all(width: 1, color: giveBorderColor)),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(
+              cornerRadius(top, topLeft),
+            ),
+            topRight: Radius.circular(
+              cornerRadius(top, topRight),
+            ),
+            bottomLeft: Radius.circular(
+              cornerRadius(bottom, bottomLeft),
+            ),
+            bottomRight: Radius.circular(
+              cornerRadius(bottom, bottomRight),
+            )),
+        border: Border.all(width: giveBorderWidth, color: giveBorderColor)),
     child: containerChild,
   );
 }
