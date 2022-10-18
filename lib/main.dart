@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate/initial_bindings.dart';
+import 'package:flutter_boilerplate/routes.dart';
 import 'package:flutter_boilerplate/utils/global_service.dart';
 import 'package:flutter_boilerplate/utils/constants.dart';
 import 'package:get/get.dart';
 import 'utils/reusable_widgets.dart';
 
 Future<void> main() async {
-  Get.put(GlobalService(), permanent: true);
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put(GlobalService(), permanent: true);
+  await GlobalService.to.getUserDataOnInit();
   runApp(const MyApp());
 }
 
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
                 MaterialColor(AppTheme.primaryColorCode, appPrimaryColor)),
         initialBinding: InitialBindings(),
         initialRoute: GlobalService.to.initialRoute(),
+        getPages: AppPages.pages,
       ),
     );
   }
