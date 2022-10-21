@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static int primaryColorCode = (0xff0000ff);
   static Color primaryColor = Color(primaryColorCode);
+  static Color commonTextColor = Colors.black87;
   static String appName = '';
 }
 

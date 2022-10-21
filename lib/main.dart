@@ -5,6 +5,7 @@ import 'package:flutter_boilerplate/utils/global_service.dart';
 import 'package:flutter_boilerplate/utils/constants.dart';
 import 'package:get/get.dart';
 import 'utils/reusable_widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,18 +19,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return annotedRegion(
-      GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: AppTheme.appName,
-        theme: ThemeData(
-            brightness: Brightness.dark,
-            primarySwatch:
-                MaterialColor(AppTheme.primaryColorCode, appPrimaryColor)),
-        initialBinding: InitialBindings(),
-        initialRoute: GlobalService.to.initialRoute(),
-        getPages: AppPages.pages,
-      ),
+    return ScreenUtilInit(
+      useInheritedMediaQuery: true,
+      builder: (_, child) {
+        return annotedRegion(
+          GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: AppTheme.appName,
+            theme: ThemeData(
+                brightness: Brightness.dark,
+                primarySwatch:
+                    MaterialColor(AppTheme.primaryColorCode, appPrimaryColor)),
+            initialBinding: InitialBindings(),
+            initialRoute: GlobalService.to.initialRoute(),
+            getPages: AppPages.pages,
+          ),
+        );
+      },
     );
   }
 }
