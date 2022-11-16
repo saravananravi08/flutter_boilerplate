@@ -15,6 +15,7 @@ migrate_working_dir/
 *.iml
 *.ipr
 *.iws
+*.md
 .idea/
 
 # The .vscode folder contains launch configuration and tasks you configure in
@@ -32,6 +33,10 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+/android/
+/ios/
+analysis_options.yaml
+
 
 # Symbolication related
 app.*.symbols
