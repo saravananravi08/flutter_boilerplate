@@ -18,7 +18,6 @@ migrate_working_dir/
 *.iml
 *.ipr
 *.iws
-*.yaml
 *.md
 .idea/
 
@@ -37,6 +36,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+analysis_options.yaml
 
 # Symbolication related
 app.*.symbols
