@@ -10,11 +10,16 @@
 .svn/
 migrate_working_dir/
 /build/
+/android/
+/ios/
+.metadata
 
 # IntelliJ related
 *.iml
 *.ipr
 *.iws
+*.yaml
+*.md
 .idea/
 
 # The .vscode folder contains launch configuration and tasks you configure in
