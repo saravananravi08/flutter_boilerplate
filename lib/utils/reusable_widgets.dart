@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_boilerplate/utils/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // widgets to change statusbarcolor
 Widget annotedRegion(Widget givechild) => AnnotatedRegion<SystemUiOverlayStyle>(
@@ -15,8 +17,8 @@ Widget annotedRegion(Widget givechild) => AnnotatedRegion<SystemUiOverlayStyle>(
 
 Widget annotedRegionLightIcon(Widget givechild) =>
     AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+      value: SystemUiOverlayStyle(
+        statusBarColor: AppTheme.primaryColor,
         statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.light,
       ),
@@ -24,22 +26,25 @@ Widget annotedRegionLightIcon(Widget givechild) =>
     );
 
 Widget verticalSpacing(double giveHeigh) => SizedBox(
-      height: giveHeigh,
+      height: giveHeigh.sp,
     );
 
 Widget horizontalSpacing(double giveWidth) => SizedBox(
-      height: giveWidth,
+      width: giveWidth.sp,
     );
 
-Widget iconWidget(giveIcon, Color? giveColor, double? giveSize) => Icon(
+Widget iconWidget(IconData giveIcon, Color? giveColor, double? giveSize) =>
+    Icon(
       giveIcon,
       color: giveColor,
       size: giveSize,
     );
 
-Widget backArrow() => IconButton(
+Widget backArrow(
+        {double giveIconSize = 25, Color giveIconColor = Colors.black}) =>
+    IconButton(
       onPressed: (() => Get.back()),
-      icon: iconWidget(Icons.arrow_back, null, 25),
+      icon: iconWidget(Icons.arrow_back_ios, giveIconColor, giveIconSize.sp),
     );
 
 // text widget using google fonts
@@ -49,19 +54,32 @@ Widget text({
   FontWeight fontweight = FontWeight.normal,
   Color textColor = Colors.black,
   double? textHeight,
-  String fontfamily = 'arial',
+  String fontfamily = 'Baloo 2',
 }) =>
-    Text(
-      giveText,
-      style: GoogleFonts.getFont(
-        fontfamily,
-        textStyle: TextStyle(
-          fontSize: fontsize,
-          fontWeight: fontweight,
-          height: textHeight,
-        ),
-      ),
-    );
+    Text(giveText,
+        textAlign: TextAlign.start,
+        style: textStyle(
+            fontfamily: fontfamily,
+            fontsize: fontsize,
+            fontweight: fontweight,
+            textColor: textColor,
+            textHeight: textHeight));
+
+TextStyle textStyle({
+  FontWeight? fontweight,
+  Color? textColor,
+  double? textHeight,
+  String fontfamily = 'Baloo 2',
+  double? fontsize,
+}) {
+  return GoogleFonts.getFont(fontfamily,
+      textStyle: TextStyle(
+        color: textColor,
+        fontSize: fontsize!.sp,
+        fontWeight: fontweight,
+        height: textHeight,
+      ));
+}
 
 // Alignment widgets
 Widget centerAlign(giveChild) => Align(
@@ -75,33 +93,53 @@ Widget alignRight(giveChild) => Align(
     );
 
 Widget alignleft(giveChild) => Align(
-      alignment: Alignment.centerRight,
+      alignment: Alignment.centerLeft,
       child: giveChild,
     );
 
 // formfield widgets
-Widget textField({
-  required TextEditingController fieldController,
-  required String giveHint,
-  required void Function(String)? onFieldEntry,
-  Color labelColor = Colors.white,
-  Color borderColor = Colors.white,
-  double? giveHeight,
-  double? giveWidth,
-}) =>
-    SizedBox(
-      height: 51,
+Widget textField(
+        {required TextEditingController fieldController,
+        required String giveHint,
+        required void Function(String)? onFieldEntry,
+        bool autofocus = false,
+        double lableTextSize = 15,
+        Color labelColor = Colors.transparent,
+        Color borderColor = Colors.transparent,
+        double? giveHeight = 60,
+        double? giveWidth,
+        bool alignLabelasHint = false,
+        Widget? suffixWidget,
+        Widget? prefixWidget,
+        FocusNode? fieldFocusNode,
+        void Function()? onFieldTap,
+        int? fieldMaxLines = 1,
+        bool isFieldReadOnly = false,
+        Color backgroundColor = Colors.white}) =>
+    Container(
+      height: giveHeight,
+      decoration: BoxDecoration(
+          color: backgroundColor, borderRadius: BorderRadius.circular(12)),
       width: giveWidth,
       child: TextFormField(
+        readOnly: isFieldReadOnly,
+        textInputAction: TextInputAction.newline,
+        maxLines: fieldMaxLines,
+        onTap: onFieldTap,
+        focusNode: fieldFocusNode,
+        autofocus: false,
         onChanged: onFieldEntry,
         controller: fieldController,
         decoration: InputDecoration(
-          labelText: giveHint,
-          labelStyle: TextStyle(
-              color: labelColor,
-              fontWeight: FontWeight.w400,
-              fontSize: 16,
-              fontFamily: null),
+          prefixIcon: prefixWidget,
+          suffixIcon: suffixWidget,
+          floatingLabelBehavior: alignLabelasHint
+              ? FloatingLabelBehavior.never
+              : FloatingLabelBehavior.auto,
+          alignLabelWithHint: alignLabelasHint,
+          hintStyle:
+              textStyle(textColor: labelColor, fontsize: lableTextSize.sp),
+          hintText: giveHint,
           enabledBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(
               Radius.circular(7),
@@ -133,33 +171,30 @@ Widget button(
         required onPress,
         required String buttonText,
         double? buttonWidth,
-        double? buttonHeight,
+        double buttonHeight = 30,
         double borderWidth = 0,
+        double borderRadius = 4,
         Color borderColor = Colors.white,
         Color buttonTextColor = Colors.white,
         double textSize = 17,
-        FontWeight textWieght = FontWeight.w600}) =>
+        FontWeight textWieght = FontWeight.normal}) =>
     SizedBox(
-      height: buttonHeight,
+      height: buttonHeight.sp,
       width: buttonWidth,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: buttonColor,
           shadowColor: Colors.transparent,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(borderRadius),
           ),
         ),
         onPressed: onPress,
-        child: Text(
-          buttonText,
-          style: TextStyle(
-            color: buttonTextColor,
-            fontFamily: null,
-            fontWeight: textWieght,
-            fontSize: textSize,
-          ),
-        ),
+        child: text(
+            giveText: buttonText,
+            fontsize: textSize,
+            fontweight: textWieght,
+            textColor: buttonTextColor),
       ),
     );
 
@@ -190,18 +225,21 @@ Widget outlineButton({
     );
 
 //divider widgets
-Widget verticalDividerWidget(giveColor) => SizedBox(
-      height: 20,
+Widget verticalDividerWidget(giveColor, double giveThickness,
+        {double giveHeight = 30}) =>
+    SizedBox(
+      height: giveHeight,
       child: VerticalDivider(
-        thickness: 2,
+        thickness: giveThickness,
         color: giveColor,
       ),
     );
 
-Widget horizontalDividerWidget(Color giveColor) => SizedBox(
+Widget horizontalDividerWidget(Color giveColor, double giveThickness) =>
+    SizedBox(
       width: Get.width,
       child: Divider(
-        thickness: 4,
+        thickness: giveThickness,
         color: giveColor,
       ),
     );
@@ -235,14 +273,24 @@ Widget customContainer(
     double topRight = 12,
     double bottomRight = 12,
     double bottomLeft = 12,
+    bool shadow = false,
     bool top = true,
     bool bottom = true,
-    required Widget containerChild}) {
+    required Widget? containerChild}) {
   return Container(
     height: giveHeight,
     width: giveWidth,
     decoration: BoxDecoration(
         color: giveColor,
+        boxShadow: [
+          BoxShadow(
+              offset: const Offset(0, 3),
+              color: shadow
+                  ? AppTheme.commonTextColor.withOpacity(0.1)
+                  : Colors.transparent,
+              spreadRadius: 2,
+              blurRadius: 3)
+        ],
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(
               cornerRadius(top, topLeft),

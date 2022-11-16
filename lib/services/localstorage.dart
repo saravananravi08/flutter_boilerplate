@@ -1,25 +1,27 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:nhost_flutter_auth/nhost_flutter_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LocalStorage {
-  final storage = const FlutterSecureStorage();
-
-  Future writeSecureData(String key, String value) async {
-    var writeData = await storage.write(key: key, value: value);
-    return writeData;
+class LocalStorage implements AuthStore {
+  @override
+  Future<String?> getString(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key);
   }
 
-  Future readSecureData(String key) async {
-    var readData = await storage.read(key: key);
-    return readData;
+  @override
+  Future<void> setString(String key, String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(key, value);
   }
 
-  Future deleteSecureData(String key) async {
-    var deleteData = await storage.delete(key: key);
-    return deleteData;
+  @override
+  Future<void> removeItem(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
   }
 
-  Future deleteAllSecureData() async {
-    var deleteData = await storage.deleteAll();
-    return deleteData;
+  Future<void> removeallItem() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   }
 }
