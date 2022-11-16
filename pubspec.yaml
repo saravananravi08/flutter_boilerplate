@@ -48,7 +48,16 @@ dependencies:
   dio: ^4.0.6
   #screen utility
   flutter_screenutil: ^5.5.4
-
+  connectivity_plus: ^3.0.2
+  nhost_sdk: ^3.0.4
+  permission_handler: ^10.2.0
+  firebase_messaging: ^14.1.0
+  shared_preferences: ^2.0.15
+  nhost_flutter_auth: ^2.0.4
+  graphql: ^5.0.0
+  nhost_graphql_adapter: ^2.0.0
+  firebase_core: ^2.2.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

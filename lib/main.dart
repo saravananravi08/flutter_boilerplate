@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate/initial_bindings.dart';
 import 'package:flutter_boilerplate/routes.dart';
-import 'package:flutter_boilerplate/utils/global_service.dart';
+import 'package:flutter_boilerplate/services/global_service.dart';
 import 'package:flutter_boilerplate/utils/constants.dart';
 import 'package:get/get.dart';
 import 'utils/reusable_widgets.dart';
