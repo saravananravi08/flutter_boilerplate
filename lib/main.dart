@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'utils/reusable_widgets.dart';
 
 Future<void> main() async {
-  Get.put(GlobalService(), permanent: true);
+  Get.put(GlobalService());
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
