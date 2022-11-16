@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Get.put(GlobalService(), permanent: true);
+  Get.put(GlobalService());
   await GlobalService.to.getUserDataOnInit();
   runApp(const MyApp());
 }
